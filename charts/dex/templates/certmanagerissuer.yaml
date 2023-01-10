@@ -1,0 +1,86 @@
+{{- if .Values.certmanager.enabled }}
+{{- if .Values.certmanager.selfSigned }}
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: dex-pki-bootstrap
+spec:
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: dex-pki-ca
+spec:
+  isCA: true
+  commonName: dex-pki-ca
+  secretName: dex-pki-ca
+  duration: 8760h0m0s # 365d
+  renewBefore: 360h0m0s # 15d
+  privateKey:
+    {{- toYaml .Values.certmanager.certificates.privateKeys | nindent 4 }}
+  issuerRef:
+    name: dex-pki-bootstrap
+    kind: Issuer
+    group: cert-manager.io
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: dex-pki-ca
+spec:
+  ca:
+    secretName: dex-pki-ca
+{{- end}}
+{{- if .Values.certmanager.acme.staging }}
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging
+spec:
+  acme:
+    # You must replace this email address with your own.
+    # Let's Encrypt will use this to contact you about expiring
+    # certificates, and issues related to your account.
+    email: mangirdas@judeikis.lt
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      # Secret resource that will be used to store the account's private key.
+      name: le-issuer-account-key
+    # Add a single challenge solver, HTTP01 using nginx
+    solvers:
+    - http01:
+        ingress:
+          class: nginx
+{{- end}}
+{{ if .Values.certmanager.selfSigned }}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: dex-tls
+spec:
+  secretName: dex-tls
+  duration: 8760h0m0s # 365d
+  renewBefore: 360h0m0s # 15d
+  {{- with .Values.certmanager.certificates.subject }}
+  subject:
+    {{- toYaml . | nindent 4 }}
+  {{- end}}
+  privateKey:
+    {{- toYaml .Values.certmanager.certificates.privateKeys | nindent 4 }}
+  usages:
+    - server auth
+  dnsNames:
+    - dex
+    - localhost
+    - dex.dex
+    - dex.dex.svc
+    - dex.dex.svc.cluster.local
+    - dex.dev.faros.sh
+    - dex.faros.sh
+  issuerRef:
+    name: dex-pki-ca
+{{- end}}
+{{- end}}
