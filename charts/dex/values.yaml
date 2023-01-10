@@ -275,3 +275,10 @@ networkPolicy:
   #    ports:
   #      - port: 636
   #        protocol: TCP
+
+
+certmanager:
+  enabled: false
+  selfSigned: false
+  acme:
+    staging: false

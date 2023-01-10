@@ -106,6 +106,10 @@ spec:
             - name: config
               mountPath: /etc/dex
               readOnly: true
+          {{- if .Values.certmanager.enabled }}
+            - name: tls-certs
+              mountPath: /etc/dex/tls/
+          {{- end }}
           {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
@@ -113,6 +117,11 @@ spec:
         - name: config
           secret:
             secretName: {{ include "dex.configSecretName" . }}
+      {{- if .Values.certmanager.enabled }}
+        - name: tls-certs
+          secret:
+            secretName: dex-tls
+      {{- end }}
       {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
