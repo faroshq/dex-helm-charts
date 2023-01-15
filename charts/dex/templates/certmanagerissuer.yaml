@@ -1,4 +1,5 @@
 {{- if .Values.certmanager.enabled }}
+# self-signed dev mode
 {{- if .Values.certmanager.selfSigned }}
 apiVersion: cert-manager.io/v1
 kind: Issuer
@@ -31,30 +32,6 @@ metadata:
 spec:
   ca:
     secretName: dex-pki-ca
-{{- end}}
-{{- if .Values.certmanager.acme.staging }}
----
-apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
-metadata:
-  name: letsencrypt-staging
-spec:
-  acme:
-    # You must replace this email address with your own.
-    # Let's Encrypt will use this to contact you about expiring
-    # certificates, and issues related to your account.
-    email: mangirdas@judeikis.lt
-    server: https://acme-staging-v02.api.letsencrypt.org/directory
-    privateKeySecretRef:
-      # Secret resource that will be used to store the account's private key.
-      name: le-issuer-account-key
-    # Add a single challenge solver, HTTP01 using nginx
-    solvers:
-    - http01:
-        ingress:
-          class: nginx
-{{- end}}
-{{ if .Values.certmanager.selfSigned }}
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -83,4 +60,44 @@ spec:
   issuerRef:
     name: dex-pki-ca
 {{- end}}
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging
+spec:
+  acme:
+    # You must replace this email address with your own.
+    # Let's Encrypt will use this to contact you about expiring
+    # certificates, and issues related to your account.
+    email: mangirdas@judeikis.lt
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      # Secret resource that will be used to store the account's private key.
+      name: le-issuer-account-key
+    # Add a single challenge solver, HTTP01 using nginx
+    solvers:
+    - http01:
+        ingress:
+          class: nginx
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    # You must replace this email address with your own.
+    # Let's Encrypt will use this to contact you about expiring
+    # certificates, and issues related to your account.
+    email: mangirdas@judeikis.lt
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      # Secret resource that will be used to store the account's private key.
+      name: le-issuer-account-key
+    # Add a single challenge solver, HTTP01 using nginx
+    solvers:
+    - http01:
+        ingress:
+          class: nginx
 {{- end}}
