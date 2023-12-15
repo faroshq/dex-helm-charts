@@ -49,7 +49,7 @@ ingress:
 
 ### Minimal TLS configuration
 
-HTTPS is basically mandatory these days, especially for authentication and authorization services.
+HTTPS is mandatory these days, especially for authentication and authorization services.
 There are several solutions for protecting services with TlS in Kubernetes,
 but by far the most popular and portable is undoubtedly [Cert Manager](https://cert-manager.io).
 
