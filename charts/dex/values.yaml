@@ -341,3 +341,8 @@ certmanager:
   selfSigned: false
   acme:
     staging: false
+
+initContainers: []
+#- name: init
+#  image: busybox
+#  command: ['sh', '-c', 'echo "init container"']
