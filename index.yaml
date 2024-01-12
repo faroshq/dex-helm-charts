@@ -10,6 +10,39 @@ entries:
           image: ghcr.io/dexidp/dex:v2.37.0
     apiVersion: v2
     appVersion: 2.37.0
+    created: "2024-01-12T14:16:48.14025317Z"
+    description: OpenID Connect (OIDC) identity and OAuth 2.0 provider with pluggable
+      connectors.
+    digest: d7a023f3270bb515638b1a3d9d4a7a1f20b8e8f15abc29110d9f1eed4d87de0c
+    home: https://dexidp.io/
+    icon: https://dexidp.io/favicon.png
+    keywords:
+    - oidc
+    - oauth
+    - identity-provider
+    - saml
+    kubeVersion: '>=1.14.0-0'
+    maintainers:
+    - email: mark.sagikazar@gmail.com
+      name: sagikazarmark
+      url: https://sagikazarmark.hu
+    name: dex
+    sources:
+    - https://github.com/dexidp/dex
+    - https://github.com/dexidp/helm-charts/tree/master/charts/dex
+    type: application
+    urls:
+    - https://github.com/faroshq/dex-helm-charts/releases/download/dex-0.15.3-4/dex-0.15.3-4.tgz
+    version: 0.15.3-4
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: added
+          description: "Add default values for path and honorLabels to ServiceMonitor"
+      artifacthub.io/images: |
+        - name: dex
+          image: ghcr.io/dexidp/dex:v2.37.0
+    apiVersion: v2
+    appVersion: 2.37.0
     created: "2023-12-17T11:56:19.264925095Z"
     description: OpenID Connect (OIDC) identity and OAuth 2.0 provider with pluggable
       connectors.
@@ -67,4 +100,4 @@ entries:
     urls:
     - https://github.com/faroshq/dex-helm-charts/releases/download/dex-0.15.3-2/dex-0.15.3-2.tgz
     version: 0.15.3-2
-generated: "2023-12-17T11:56:19.26495995Z"
+generated: "2024-01-12T14:16:48.140274039Z"
