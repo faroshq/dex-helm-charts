@@ -335,6 +335,8 @@ networkPolicy:
   #      - port: 636
   #        protocol: TCP
 
+certificates:
+  dnsNames: []
 
 certmanager:
   enabled: false

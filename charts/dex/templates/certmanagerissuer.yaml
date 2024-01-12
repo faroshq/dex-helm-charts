@@ -52,11 +52,9 @@ spec:
   dnsNames:
     - dex
     - localhost
-    - dex.dex
-    - dex.dex.svc
-    - dex.dex.svc.cluster.local
-    - dex.dev.faros.sh
-    - dex.faros.sh
+    {{- range .Values.certificates.dnsNames }}
+    - {{ . }}
+    {{- end }}
   issuerRef:
     name: dex-pki-ca
 {{- end}}
