@@ -139,7 +139,7 @@ spec:
         {{- if .Values.persistency.enabled }}
         - name: dex-persistency
           persistentVolumeClaim:
-            claimName: {{ include "dex.fullname" . }}-persistency
+            claimName: {{ include "dex.fullname" . }}
         {{- end }}
       {{- if .Values.certmanager.enabled }}
         - name: tls-certs
