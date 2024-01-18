@@ -1,0 +1,18 @@
+{{- if .Values.persistency.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "dex.fullname" . }}
+  labels:
+    {{- include "dex.labels" . | nindent 4 }}
+    {{ with .Values.deploymentLabels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.persistency.volumeSize }}
+  {{ with .Values.persistency.volumeClassName -}}storageClassName: {{ . }}{{- end }}
+{{- end }}

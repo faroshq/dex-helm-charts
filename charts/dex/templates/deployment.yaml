@@ -128,10 +128,19 @@ spec:
           {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          {{- if .Values.persistency.enabled }}
+            - name: dex-persistency
+              mountPath: {{ .Values.persistency.dir }}
+          {{- end }}
       volumes:
         - name: config
           secret:
             secretName: {{ include "dex.configSecretName" . }}
+        {{- if .Values.persistency.enabled }}
+        - name: dex-persistency
+          persistentVolumeClaim:
+            claimName: {{ include "dex.fullname" . }}-persistency
+        {{- end }}
       {{- if .Values.certmanager.enabled }}
         - name: tls-certs
           secret:

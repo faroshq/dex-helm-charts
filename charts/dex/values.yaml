@@ -348,3 +348,9 @@ initContainers: []
 #- name: init
 #  image: busybox
 #  command: ['sh', '-c', 'echo "init container"']
+
+persistency:
+  enabled: false
+  dir: /data
+  volumeSize: 1Gi
+  volumeClassName: ""
