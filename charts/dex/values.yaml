@@ -337,6 +337,10 @@ networkPolicy:
 
 certificates:
   dnsNames: []
+  secretTemplate:
+    enabled: false
+    annotations: {}
+    labels: {}
 
 certmanager:
   enabled: false

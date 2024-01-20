@@ -24,6 +24,17 @@ spec:
     name: dex-pki-bootstrap
     kind: Issuer
     group: cert-manager.io
+{{- if .Values.certificates.secretTemplate.enabled }}
+  secretTemplate:
+{{- if .Values.certificates.secretTemplate.annotations }}
+    annotations:
+    {{- toYaml .Values.certificates.secretTemplate.annotations | nindent 6 }}
+{{- end }}
+{{- if .Values.certificates.secretTemplate.labels }}
+    labels:
+    {{- toYaml .Values.certificates.secretTemplate.labels | nindent 6 }}
+{{- end }}
+{{- end }}
 ---
 apiVersion: cert-manager.io/v1
 kind: Issuer
@@ -57,6 +68,17 @@ spec:
     {{- end }}
   issuerRef:
     name: dex-pki-ca
+{{- if .Values.certificates.secretTemplate.enabled }}
+  secretTemplate:
+{{- if .Values.certificates.secretTemplate.annotations }}
+    annotations:
+    {{- toYaml .Values.certificates.secretTemplate.annotations | nindent 6 }}
+{{- end }}
+{{- if .Values.certificates.secretTemplate.labels }}
+    labels:
+    {{- toYaml .Values.certificates.secretTemplate.labels | nindent 6 }}
+{{- end }}
+{{- end }}
 {{- end}}
 ---
 apiVersion: cert-manager.io/v1
